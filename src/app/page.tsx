@@ -1,5 +1,9 @@
+import SignInForm from "./components/sign-in-form";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24"></main>
+    <main className="bg-gray-900 py-10 mt-32 mx-96 rounded-md">
+      <SignInForm />
+    </main>
   );
 }
