@@ -11,7 +11,7 @@ export default function SignInForm() {
   const [password, setPassword] = useState<string>();
 
   return (
-    <div className="flex flex-col items-center  text-lime-500 font-semibold">
+    <div className="flex flex-col items-center text-lime-500 font-semibold">
       <h2 className="text-2xl mb-5">Log In</h2>
       <Form.Root className="flex flex-col gap-4">
         <Form.Field className="mx-auto" name="email">
@@ -58,7 +58,7 @@ export default function SignInForm() {
               }
             }}
             type="submit"
-            className="w-60 p-2 mt-3 mx-auto rounded-md bg-lime-500 text-center text-gray-950"
+            className="w-60 p-2 mt-3 mx-auto rounded-md bg-lime-500 text-center font-bold text-gray-950"
           >
             Sign In
           </button>
