@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { ImHome } from "react-icons/im";
+import HeaderLanding from "./components/header-landing";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,17 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-gray-950 h-screen`}>
-        <header>
-          <nav className="bg-gray-900 text-white py-4 px-24">
-            <ul className="flex justify-between items-center">
-              <li>
-                <a className="text-lime-500  text-3xl font-bold" href="">
-                  TWILLY
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </header>
+        <HeaderLanding />
         {children}
       </body>
     </html>
