@@ -2,14 +2,13 @@
 import { useUser } from "@clerk/nextjs";
 import * as Form from "@radix-ui/react-form";
 import * as Avatar from "@radix-ui/react-avatar";
-import { useState } from "react";
-import { savePost } from "@/api/post";
+import { useState, useEffect } from "react";
+import { getPost, savePost } from "@/api/post";
 
-export default function Posts() {
+export default function Posts(props: { arrayPosts: Post[] }) {
   const { user } = useUser();
-
   const [postContent, setPostContent] = useState<string>("");
-  const [postsArray, setPostsArray] = useState<Post[]>([]);
+  const [postsArray, setPostsArray] = useState<Post[]>(props.arrayPosts);
 
   let posts = postsArray.map((post, i) => {
     return (
