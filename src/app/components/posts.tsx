@@ -1,12 +1,16 @@
 "use client";
-
+import { useUser } from "@clerk/nextjs";
 import * as Form from "@radix-ui/react-form";
 import * as Avatar from "@radix-ui/react-avatar";
 import { useState } from "react";
 
 export default function Posts() {
+  const { user } = useUser();
+
   const [postContent, setPostContent] = useState<string>("");
   const [postsArray, setPostsArray] = useState<Post[]>([]);
+
+  console.log(postsArray);
 
   let posts = postsArray.map((post, i) => {
     return (
@@ -25,7 +29,7 @@ export default function Posts() {
               CT
             </Avatar.Fallback>
           </Avatar.Root>
-          <p className="text-xl">nombre usuario</p>
+          <p className="text-xl">{post.userName}</p>
         </div>
         <div className="ml-20">
           <p className=" text-gray-300 pb-3">{post.content}</p>
@@ -68,11 +72,11 @@ export default function Posts() {
           onSubmit={(e) => {
             e.preventDefault();
 
-            if (postContent) {
+            if (postContent && user?.id && user.fullName) {
               let post: Post = {
                 id: Date.now().toString(),
-                userId: "",
-                userName: "",
+                userId: user?.id,
+                userName: user?.fullName,
                 content: postContent,
                 date: new Date(),
               };
