@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { UserButton } from "@clerk/nextjs";
 
 export default function HeaderLanding() {
   return (
@@ -9,6 +10,9 @@ export default function HeaderLanding() {
             <Link className="text-lime-500  text-3xl font-bold" href="">
               TWILLY
             </Link>
+          </li>
+          <li>
+            <UserButton afterSignOutUrl="/" />
           </li>
         </ul>
       </nav>
