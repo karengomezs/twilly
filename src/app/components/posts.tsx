@@ -3,14 +3,13 @@ import { useUser } from "@clerk/nextjs";
 import * as Form from "@radix-ui/react-form";
 import * as Avatar from "@radix-ui/react-avatar";
 import { useState } from "react";
+import { savePost } from "@/api/post";
 
 export default function Posts() {
   const { user } = useUser();
 
   const [postContent, setPostContent] = useState<string>("");
   const [postsArray, setPostsArray] = useState<Post[]>([]);
-
-  console.log(postsArray);
 
   let posts = postsArray.map((post, i) => {
     return (
@@ -22,7 +21,7 @@ export default function Posts() {
           <Avatar.Root className="">
             <Avatar.Image
               className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center object-cover"
-              src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
+              src={post.userImg}
               alt="Colm Tuite"
             />
             <Avatar.Fallback className="" delayMs={600}>
@@ -69,17 +68,19 @@ export default function Posts() {
 
         <Form.Root
           className="flex items-center gap-5 w-full"
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
 
             if (postContent && user?.id && user.fullName) {
               let post: Post = {
                 id: Date.now().toString(),
                 userId: user?.id,
-                userName: user?.fullName,
                 content: postContent,
                 date: new Date(),
+                userName: user?.fullName,
+                userImg: user.imageUrl,
               };
+              await savePost(post);
               setPostsArray([post, ...postsArray]);
               setPostContent("");
             }
