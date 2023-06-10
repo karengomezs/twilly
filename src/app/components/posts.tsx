@@ -65,7 +65,7 @@ export default function Posts(props: { arrayPosts: Post[] }) {
         <Avatar.Root className="">
           <Avatar.Image
             className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center object-cover"
-            src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
+            src={user?.imageUrl}
             alt="Colm Tuite"
           />
           <Avatar.Fallback className="" delayMs={600}>
