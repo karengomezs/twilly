@@ -5,6 +5,8 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  query,
+  orderBy,
 } from "firebase/firestore";
 
 export async function savePost(post: Omit<Post, "id">) {
@@ -18,7 +20,9 @@ export async function savePost(post: Omit<Post, "id">) {
 
 export async function getPost() {
   try {
-    const querySnapShot = await getDocs(collection(db, "posts"));
+    const postRef = collection(db, "posts");
+    const q = query(postRef, orderBy("date", "desc"));
+    const querySnapShot = await getDocs(q);
     return querySnapShot;
   } catch (error) {
     console.error(error);
