@@ -34,23 +34,25 @@ export default function Posts(props: { arrayPosts: Post[] }) {
           <div className="flex gap-3 [&>button]:p-2 [&>button]:bg-gray-950 [&>button]:rounded-md">
             <button>💚</button>
             <button>🔗</button>
-            <button
-              onClick={async () => {
-                try {
-                  await deletePost(post.id);
+            {user?.id === post.userId && (
+              <button
+                onClick={async () => {
+                  try {
+                    await deletePost(post.id);
 
-                  let newArray = postsArray.filter((postContent) => {
-                    return postContent.id !== post.id;
-                  });
-                  setPostsArray(newArray);
-                } catch (error) {
-                  console.error(error);
-                }
-              }}
-              type="button"
-            >
-              🗑️
-            </button>
+                    let newArray = postsArray.filter((postContent) => {
+                      return postContent.id !== post.id;
+                    });
+                    setPostsArray(newArray);
+                  } catch (error) {
+                    console.error(error);
+                  }
+                }}
+                type="button"
+              >
+                🗑️
+              </button>
+            )}
           </div>
         </div>
       </div>
