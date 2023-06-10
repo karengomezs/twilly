@@ -8,8 +8,6 @@ export default function Content() {
   const [postContent, setPostContent] = useState<string>("");
   const [postsArray, setPostsArray] = useState<string[]>([]);
 
-  console.log(postsArray);
-
   let posts = postsArray.map((post, i) => {
     return (
       <div
@@ -34,6 +32,16 @@ export default function Content() {
           <div className="flex gap-3 [&>button]:p-2 [&>button]:bg-gray-950 [&>button]:rounded-md">
             <button>💚</button>
             <button>🔗</button>
+            <button
+              onClick={() => {
+                let newArray = postsArray.filter((postContent) => {
+                  return postContent !== post;
+                });
+                setPostsArray(newArray);
+              }}
+            >
+              🗑️
+            </button>
           </div>
         </div>
       </div>
@@ -63,7 +71,7 @@ export default function Content() {
                 }}
                 value={postContent}
                 className="flex-1 w-full p-2 rounded-md"
-                placeholder="What're you thinking? 🧐"
+                placeholder="What're you thinking...? 🧐"
                 type="text"
                 required
               />
@@ -86,11 +94,8 @@ export default function Content() {
       </div>
 
       {/* ------------ posts div */}
-      <div className="mt-10 flex flex-col gap-5">
-        {/* primer post */}
-        {posts}
-        {/* termina primer post */}
-      </div>
+      <div className="mt-10 flex flex-col gap-5">{posts}</div>
+      {/* ------------ posts div */}
     </div>
   );
 }
