@@ -2,15 +2,15 @@
 import { useUser } from "@clerk/nextjs";
 import * as Form from "@radix-ui/react-form";
 import * as Avatar from "@radix-ui/react-avatar";
-import { useState, useEffect } from "react";
-import { getPost, savePost } from "@/api/post";
+import { useState } from "react";
+import { deletePost, savePost } from "@/api/post";
 
 export default function Posts(props: { arrayPosts: Post[] }) {
   const { user } = useUser();
   const [postContent, setPostContent] = useState<string>("");
   const [postsArray, setPostsArray] = useState<Post[]>(props.arrayPosts);
 
-  let posts = postsArray.map((post, i) => {
+  let posts = postsArray.map((post) => {
     return (
       <div
         key={post.id}
@@ -35,11 +35,17 @@ export default function Posts(props: { arrayPosts: Post[] }) {
             <button>💚</button>
             <button>🔗</button>
             <button
-              onClick={() => {
-                let newArray = postsArray.filter((postContent) => {
-                  return postContent.id !== post.id;
-                });
-                setPostsArray(newArray);
+              onClick={async () => {
+                try {
+                  await deletePost(post.id);
+
+                  let newArray = postsArray.filter((postContent) => {
+                    return postContent.id !== post.id;
+                  });
+                  setPostsArray(newArray);
+                } catch (error) {
+                  console.error(error);
+                }
               }}
               type="button"
             >
@@ -69,19 +75,24 @@ export default function Posts(props: { arrayPosts: Post[] }) {
           className="flex items-center gap-5 w-full"
           onSubmit={async (e) => {
             e.preventDefault();
+            try {
+              if (postContent && user?.id && user.fullName) {
+                let post = {
+                  userId: user?.id,
+                  content: postContent,
+                  date: new Date(),
+                  userName: user?.fullName,
+                  userImg: user.imageUrl,
+                } as Post;
 
-            if (postContent && user?.id && user.fullName) {
-              let post: Post = {
-                id: Date.now().toString(),
-                userId: user?.id,
-                content: postContent,
-                date: new Date(),
-                userName: user?.fullName,
-                userImg: user.imageUrl,
-              };
-              await savePost(post);
-              setPostsArray([post, ...postsArray]);
-              setPostContent("");
+                const doc = await savePost(post);
+                post.id = doc?.id ?? Date.now().toString();
+
+                setPostsArray([post, ...postsArray]);
+                setPostContent("");
+              }
+            } catch (error) {
+              console.error(error);
             }
           }}
         >

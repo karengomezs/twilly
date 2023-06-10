@@ -7,7 +7,7 @@ import {
   doc,
 } from "firebase/firestore";
 
-export async function savePost(post: Post) {
+export async function savePost(post: Omit<Post, "id">) {
   try {
     const docRef = await addDoc(collection(db, "posts"), post);
     return docRef;
