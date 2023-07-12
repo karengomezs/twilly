@@ -8,7 +8,9 @@ import { deletePost, savePost } from "@/api/post";
 export default function Posts(props: { arrayPosts: Post[] }) {
   const { user } = useUser();
   const [postContent, setPostContent] = useState<string>("");
-  const [postsArray, setPostsArray] = useState<Post[]>(props.arrayPosts);
+  const [postsArray, setPostsArray] = useState<Post[]>(props?.arrayPosts || []);
+
+  console.log(props?.arrayPosts);
 
   let posts = postsArray.map((post) => {
     return (

@@ -3,6 +3,9 @@ import Posts from "./components/posts";
 
 export default async function Home() {
   const postsArray = await getPost();
+
+  console.log({ postsArray });
+
   const posts = postsArray?.docs.map((dato) => {
     let data = dato.data();
     return {
