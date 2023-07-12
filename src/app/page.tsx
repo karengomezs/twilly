@@ -14,5 +14,9 @@ export default async function Home() {
     };
   }) as Post[];
 
-  return <Posts arrayPosts={posts} />;
+  return (
+    <div className="pb-12">
+      <Posts arrayPosts={posts} />
+    </div>
+  );
 }
